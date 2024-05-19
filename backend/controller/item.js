@@ -11,7 +11,7 @@ const getitems = async (req, res) => {
     })
 }
 
- const postitems = async (req, res) => {
+const postitems = async (req, res) => {
   //  const title = req.body.title
   //  const description = req.body.description
     const {title, description} = req.body
@@ -35,26 +35,24 @@ const getitems = async (req, res) => {
 }
 
 const putitems = async (req, res) => {
-    const itemid = req.params.itemid
+    const itemId = req.params.itemId
 
-    const newtitle = req.body.title
-    const newdescription = req.body.description
+    const newTitle = req.body.title
+    const newDescription = req.body.description
     try {
-        const item = await Item.findById({id:itemid}).exec()
+        const updatedItem = await Item.findByIdAndUpdate(itemId, 
+            { title: newTitle, description: newDescription }, { new: true });
 
-        if (!item) {
+        if (!updatedItem) {
             console.log('item does not exist');
         }
     
-        item.title = newtitle
-        item.description = newdescription
-    
-        const updateditem = item.save()
+        const updateitem = await updatedItem.save()
         res.json({
             status: 200,
-            message: 'item posted  successful',
+            message: 'item updated successful',
             successfull:true,
-            data:updateditem
+            data:updateitem
         })
     } catch (error) {
         console.log(error);
@@ -64,6 +62,25 @@ const putitems = async (req, res) => {
 
 }
 
-const deleteitem = (res,req) => {}
+const deleteitem = async(req, res) => {
+    const itemId = req.params.itemId
+    try {
+        const itemdelete = await Item.findByIdAndDelete(itemId)
 
-module.exports = {getitems, postitems, putitems}
+    if (!itemdelete) {
+        console.log('item does not exist');
+        console.log(itemdelete);
+    }
+    res.json({
+        status: 200,
+        message: 'item deleted  successful',
+        successfull:true,
+    })
+    } catch (error) {
+        console.log(error);
+    }
+    
+
+}
+
+module.exports = {getitems, postitems, putitems, deleteitem}

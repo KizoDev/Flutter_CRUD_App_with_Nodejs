@@ -1,14 +1,14 @@
 const express = require("express");
 const router =express.Router()
 
-const {getitems, postitems, putitems} = require('../controller/item')
+const {getitems, postitems, putitems, deleteitem} = require('../controller/item')
 
-router.get('/getitems', getitems)
+router.get('/items', getitems)
 
-router.post('/items', postitems)
+router.post('/addItem', postitems)
 
-router.put('/updateitem/:itemid', putitems)
+router.put('/updateitem/:itemId', putitems)
 
-router.delete('/api/items',)
+router.delete('deleteitem/:itemId', deleteitem)
 
 module.exports = router

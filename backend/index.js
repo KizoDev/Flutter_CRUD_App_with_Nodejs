@@ -16,8 +16,8 @@ const routerdelete = require('./router/item')
 app.use(express.json());
 app.use('/api', routerget)
 app.use('/api', routerpost)
-app.use('/', routerput)
-app.use('/', routerdelete)
+app.use('/api', routerput)
+app.use('/api', routerdelete)
 
 
 
